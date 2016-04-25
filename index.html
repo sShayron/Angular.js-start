@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="Loja">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Loja de Roupa</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+  </head>
+
+  <body ng-controller="LojaController as loja">
+    <div class="list-group">
+      <div class="list-group-item" ng-repeat="product in loja.products" class="list-group-item">
+        <h3>
+          {{product.name}}
+          <em class="pull-right"> {{product.price | currency}} </em>
+        </h3>
+
+        <div class="gallery">
+          <img width="200px" class="img img-circle img-thumbnail cernter-block" ng-src="{{product.images[0].full}}"/>
+        </div>
+
+        <section>
+          <ul class="nav nav-pills">
+            <li> <a href ng-click="tab = 1">Description</a> </li>
+            <li> <a href ng-click="tab = 2">Specifications</a> </li>
+            <li> <a href ng-click="tab = 3">Reviews</a> </li>
+          </ul>
+          {{tab}}
+        </section>
+      </div>
+    </div>
+
+
+  </body>
+</html>
