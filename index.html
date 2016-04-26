@@ -20,31 +20,32 @@
           <img width="200px" class="img img-circle img-thumbnail cernter-block" ng-src="{{product.images[0].full}}"/>
         </div>
 
-        <section ng-init="tab = 1">
+        <section ng-controller="PainelController as painel">
           <ul class="nav nav-pills">
-            <li ng-class="{ active: tab === 1 }">
-              <a href ng-click="tab = 1">Descrição</a>
+            <li ng-class="{active: painel.estaSelecionada(1)}">
+              <a href ng-click="painel.selecionaTab(1)">Descrição</a>
             </li>
-            <li ng-class="{ active: tab === 2 }">
-              <a href ng-click="tab = 2">Especificações</a>
+            <li ng-class="{active: painel.estaSelecionada(2)}">
+              <a href ng-click="painel.selecionaTab(2)">Especificações</a>
             </li>
-            <li ng-class="{ active: tab === 3 }">
-              <a href ng-click="tab = 3">Comentarios</a>
+            <li ng-class="{active: painel.estaSelecionada(3)}">
+              <a href ng-click="painel.selecionaTab(3)">Comentarios</a>
             </li>
           </ul>
-        </section>
-        <div clas="panel" ng-show="tab === 1">
-          <h4>Descrição</h4>
-          <p>{{product.description}}</p>
-        </div>
-        <div clas="panel" ng-show="tab === 2">
-          <h4>Especificação</h4>
-          <p>Nenhuma especificação</p>
-        </div>
-        <div clas="panel" ng-show="tab === 3">
-          <h4>Comentário</h4>
-          <p>Nenhum comentário</p>
-        </div>
+        
+		  <div clas="panel" ng-show="painel.estaSelecionada(1)">
+		    <h4>Descrição</h4>
+		    <p>{{product.description}}</p>
+		  </div>
+		  <div clas="panel" ng-show="painel.estaSelecionada(2)">
+		    <h4>Especificação</h4>
+		    <p>Nenhuma especificação</p>
+		  </div>
+		  <div clas="panel" ng-show="painel.estaSelecionada(3)">
+		    <h4>Comentário</h4>
+		    <p>Nenhum comentário</p>
+		  </div>
+		</section>
       </div>
     </div>
 

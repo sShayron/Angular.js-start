@@ -4,6 +4,18 @@
   app.controller('LojaController', function(){
     this.products = camisas;
   });
+  
+  app.controller('PainelController', function(){
+	this.tab = 1;
+	
+	this.selecionaTab = function(marcaTab){
+		this.tab = marcaTab;
+	}
+	
+	this.estaSelecionada = function(checkTab){
+		return this.tab === checkTab;
+	}
+  })
 
   var camisas = [
   {
