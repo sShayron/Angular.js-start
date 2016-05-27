@@ -8,47 +8,90 @@
     <script type="text/javascript" src="app.js"></script>
   </head>
 
-  <body ng-controller="LojaController as loja">
-    <div class="list-group">
-      <div class="list-group-item" ng-repeat="product in loja.products" class="list-group-item">
-        <h3>
-          {{product.name}}
-          <em class="pull-right"> {{product.price | currency}} </em>
-        </h3>
+  <body class="list-group" ng-controller="LojaController as lojaCtrl">
+    <header>
+      <h1>Store shay</h1>
+    </header>
+    <div class="list-group-item" ng-repeat="product in lojaCtrl.products" class="list-group-item">
+      <h3>
+        {{product.name}}
+        <em class="pull-right"> {{product.price | currency}} </em>
+      </h3>
 
-        <div class="gallery">
-          <img width="200px" class="img img-circle img-thumbnail cernter-block" ng-src="{{product.images[0].full}}"/>
+      <!--  *****GALERIA*****  -->
+      <div class='gallery' ng-controller="GaleriaController as galeriaCtrl" ng-show="product.images.length">
+        <div class="img-wrap">
+          <img ng-src="{{ product.images[galeriaCtrl.atual] }}" width="200px" />
         </div>
-
-        <section ng-controller="PainelController as painel">
-          <ul class="nav nav-pills">
-            <li ng-class="{active: painel.estaSelecionada(1)}">
-              <a href ng-click="painel.selecionaTab(1)">Descrição</a>
-            </li>
-            <li ng-class="{active: painel.estaSelecionada(2)}">
-              <a href ng-click="painel.selecionaTab(2)">Especificações</a>
-            </li>
-            <li ng-class="{active: painel.estaSelecionada(3)}">
-              <a href ng-click="painel.selecionaTab(3)">Comentarios</a>
-            </li>
-          </ul>
-        
-		  <div clas="panel" ng-show="painel.estaSelecionada(1)">
-		    <h4>Descrição</h4>
-		    <p>{{product.description}}</p>
-		  </div>
-		  <div clas="panel" ng-show="painel.estaSelecionada(2)">
-		    <h4>Especificação</h4>
-		    <p>Nenhuma especificação</p>
-		  </div>
-		  <div clas="panel" ng-show="painel.estaSelecionada(3)">
-		    <h4>Comentário</h4>
-		    <p>Nenhum comentário</p>
-		  </div>
-		</section>
+        <ul class="img-thumbnails clearfix">
+          <li class="small-image pull-left thumbnail" ng-repeat="image in product.images track by $index">
+            <img ng-src="{{ image }}" width="80x"/>
+          </li>
+        </ul>
       </div>
-    </div>
+      <!--  *****PAINEL*****  -->
+      <section ng-controller="PainelController as painelCtrl">
+        <ul class="nav nav-pills">
+          <li ng-class="{active: painelCtrl.estaSelecionada(1)}">
+            <a href ng-click="painelCtrl.selecionaTab(1)">Descrição</a>
+          </li>
+          <li ng-class="{active: painelCtrl.estaSelecionada(2)}">
+            <a href ng-click="painelCtrl.selecionaTab(2)">Especificações</a>
+          </li>
+          <li ng-class="{active: painelCtrl.estaSelecionada(3)}">
+            <a href ng-click="painelCtrl.selecionaTab(3)">Comentarios</a>
+          </li>
+        </ul>
 
+    	  <div ng-show="painelCtrl.estaSelecionada(1)">
+    	    <h4>Descrição</h4>
+    	    <p>{{product.description}}</p>
+    	  </div>
+    	  <div ng-show="painelCtrl.estaSelecionada(2)">
+    	    <h4>Especificação</h4>
+          <p>{{ product.especification }}</p>
+    	    <p ng-show="!product.especification.length">Nenhuma especificação</p>
+    	  </div>
+    	  <div ng-show="painelCtrl.estaSelecionada(3)">
+          <ul>
+            <h4>Comentário</h4>
+            <li ng-repeat="comentario in product.comentarios">
+              <blockquote>
+                <strong>{{comentario.estrelas}} Estrelas</strong>
+                {{comentario.texto}}
+                <cite class="clearfix">—{{comentario.autor}}</cite>
+              </blockquote>
+            </li>
+      	    <p ng-show="">Nenhum comentário</p>
+          </ul>
+
+          <!--  COMENTARIO FORM -->
+          <form name="comentarioForm" ng-controller="ComentarioController as comentarioCtrl" ng-submit ="comentarioCtrl.addComentario(product)">
+              <blockquote>
+                <strong>Stars: {{comentarioCtrl.comentario.estrelas}} </strong>
+                {{comentarioCtrl.comentario.texto}}
+                <cite class="clearfix">—{{comentarioCtrl.comentario.autor}}</cite>
+              </blockquote>
+
+              <h4>Submit a Review</h4>
+              <fieldset class="form-group">
+                <select ng-model="comentarioCtrl.comentario.estrelas" class="form-control" ng-options="estrelas for estrelas in [5,4,3,2,1]"  title="Estrelas">
+                  <option value="">Avalie o produto</option>
+                </select>
+              </fieldset>
+              <fieldset class="form-group">
+                <textarea ng-model="comentarioCtrl.comentario.texto" class="form-control" placeholder="Comente sobre o produto..." title="Comentario"></textarea>
+              </fieldset>
+              <fieldset class="form-group">
+                <input ng-model="comentarioCtrl.comentario.autor" type="email" class="form-control" placeholder="rock@rock.com" title="Email" />
+              </fieldset>
+              <fieldset class="form-group">
+                <input ng-submit="addComentario" type="submit" class="btn btn-primary pull-right" value="Enviar Comentario" />
+              </fieldset>
+            </form>
+    	  </div>
+	    </section>
+    </div>
 
   </body>
 </html>
