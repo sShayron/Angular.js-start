@@ -1,6 +1,7 @@
 (function(){
   var app = angular.module('Loja', []);
 
+// *****CONTROLLERS*****
   app.controller('LojaController', function(){
     this.products = camisas;
   });
@@ -29,12 +30,23 @@
     this.comentario = {};
 
     this.addComentario = function(product){
+      this.comentario.dtCriado = Date.now();
       product.comentarios.push(this.comentario);
 
       this.comentario = {};
     };
   });
 
+// *****DIRECTIVES*****
+//**tituloproduto
+app.directive('produtoTitulo', function(){
+  return {
+    retrict: 'E',
+    template: '{{product.name}}<em class="pull-right">{{product.price | currency}}</em>'
+  };
+});
+
+// *****VARIAVEIS*****
   var camisas = [
   {
     name: 'Camisa do Hulk',
@@ -79,10 +91,8 @@
       texto: "Ridiculo é voce cara volverine é massa",
       autor: "xmanawesoome@jurubeba.com",
       dtCriado: 1397490980837
-    }
-  ]
-  }
-  ];
+    }]
+  }];
 
-
+//*****FIM DO MODULO*****
 })();
