@@ -38,11 +38,25 @@
   });
 
 // *****DIRECTIVES*****
-//**tituloproduto
+//*Titulo do Produto*
 app.directive('produtoTitulo', function(){
   return {
     retrict: 'E',
     template: '{{product.name}}<em class="pull-right">{{product.price | currency}}</em>'
+  };
+});
+//*Painel do Produto*
+app.directive('produtoPainel', function(){
+  return {
+    restrict: 'E',
+    templateUrl: './template/produto-painel.html'
+  };
+});
+
+app.directive('produtoGaleria', function(){
+  return {
+    restrict: 'E',
+    templateUrl: './template/produto-galeria.html'
   };
 });
 
