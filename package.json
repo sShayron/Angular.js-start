@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Loja para roupas",
   "scripts": {
-    "start": "http-server www/ -p 3000"
+    "start": "http-server -p 3000"
   },
   "author": "Shayron Aguiar",
   "license": "ISC",
